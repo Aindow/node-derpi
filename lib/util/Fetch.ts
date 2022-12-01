@@ -7,11 +7,12 @@ import * as Helpers from '../util/Helpers';
 import { SearchResults } from '../api/SearchResults';
 import { ImageComments } from '../api/ImageComments';
 import { DefaultFilters } from './DefaultFilters';
-import { ReverseImageSearchResults } from '../api/ReverseImageSearchResults';
+//import { ReverseImageSearchResults } from '../api/ReverseImageSearchResults';
 
 import { Stream } from 'stream';
 import { JsonConvert, ValueCheckingMode } from 'json2typescript';
-import fetch = require('fetch');
+//import { Options } from 'request';
+const fetch = require('node-fetch');
 
 /**
  * Represents various sort formats for results
@@ -170,7 +171,7 @@ export class Fetch {
 	 * @memberof Fetch
 	 */
 	public static async fetchImage(id: string | number): Promise<Image> {
-		const options: fetch.Options = {
+		const options = {
 			uri: URLs.IMAGE_URL.replace('{}', (id as string))
 		};
 
@@ -190,7 +191,7 @@ export class Fetch {
 	 * @memberof Fetch
 	 */
 	public static async fetchUser(username: string): Promise<User> {
-		const options: fetch.Options = {
+		const options = {
 			uri: URLs.USER_URL.replace('{}', Helpers.slugify(username))
 		};
 
@@ -216,7 +217,7 @@ export class Fetch {
 			curId = (this.userIDToURLMap.get(id) as string);
 		}
 
-		const options: fetch.Options = {
+		const options = {
 			uri: URLs.USER_URL.replace('{}', curId)
 		};
 		let requestOptions = Object.assign({}, options);
@@ -257,12 +258,15 @@ export class Fetch {
 		if (page === undefined) page = 1;
 		if (filterID === undefined) filterID = DefaultFilters.DEFAULT;
 
-		const options: fetch.Options = {
+		const options = {
+			
 			uri: URLs.TAG_URL.replace('{}', Helpers.slugify(name)),
 			qs: {
+				q : "",
 				page: page,
 				filter_id: filterID
-			}
+			},
+			assign : null
 		};
 
 		const json = await this.fetchJSON(options);
@@ -286,13 +290,14 @@ export class Fetch {
 		if (page === undefined) page = 1;
 		if (filterID === undefined) filterID = DefaultFilters.DEFAULT;
 
-		const options: fetch.Options = {
+		const options= {
 			uri: URLs.TAG_SEARCH_URL,
 			qs: {
 				q: 'id:' + id,
 				page: page,
 				filter_id: filterID
-			}
+			},
+			assign : null
 		};
 		let requestOptions = Object.assign({}, options);
 		let json = await this.fetchJSON(requestOptions);
@@ -323,7 +328,7 @@ export class Fetch {
 		if (page === undefined) page = 1;
 		if (filterID === undefined) filterID = DefaultFilters.DEFAULT;
 
-		const options: fetch.Options = {
+		const options= {
 			uri: URLs.SEARCH_URL,
 			qs: {
 				q: query,
@@ -331,7 +336,8 @@ export class Fetch {
 				sd: sortOrder,
 				page: page,
 				filter_id: filterID
-			}
+			},
+			assign : null
 		};
 
 		const json = await this.fetchJSON(options);
@@ -345,45 +351,45 @@ export class Fetch {
 		return searchResults;
 	}
 
-	/**
-	 * Searches for images that are visually similar to the image provided.
-	 *
-	 * @static
-	 * @param {ReverseImageSearchOptions} reverseImageSearchOptions The options to search with
-	 * @returns {Promise<ReverseImageSearchResults>} A Promise wrapping the returned results
-	 * @memberof Fetch
-	 */
-	public static async reverseImageSearch(reverseImageSearchOptions: ReverseImageSearchOptions): Promise<ReverseImageSearchResults> {
-		let { key, image, url, fuzziness } = reverseImageSearchOptions;
+	// /**
+	//  * Searches for images that are visually similar to the image provided.
+	//  *
+	//  * @static
+	//  * @param {ReverseImageSearchOptions} reverseImageSearchOptions The options to search with
+	//  * @returns {Promise<ReverseImageSearchResults>} A Promise wrapping the returned results
+	//  * @memberof Fetch
+	//  */
+	// public static async reverseImageSearch(reverseImageSearchOptions: ReverseImageSearchOptions): Promise<ReverseImageSearchResults> {
+	// 	let { key, image, url, fuzziness } = reverseImageSearchOptions;
 
-		if (!image && !url) throw new Error('Invalid argument; either image or url must be provided.');
-		if (image && !key)  throw new Error('Invalid argument; the key parameter must be provided for searching by image');
+	// 	if (!image && !url) throw new Error('Invalid argument; either image or url must be provided.');
+	// 	if (image && !key)  throw new Error('Invalid argument; the key parameter must be provided for searching by image');
 
-		if (!fuzziness)           fuzziness = 0.25; // default value
-		else if (fuzziness > 0.5) fuzziness = 0.5;  // clamp high
-		else if (fuzziness < 0.2) fuzziness = 0.2;  // clamp low
+	// 	if (!fuzziness)           fuzziness = 0.25; // default value
+	// 	else if (fuzziness > 0.5) fuzziness = 0.5;  // clamp high
+	// 	else if (fuzziness < 0.2) fuzziness = 0.2;  // clamp low
 
-		let options: fetch.Options = {
-			uri: URLs.REVERSE_IMAGE_SEARCH_URL,
-			qs: {
-				url: url,
-				distance: fuzziness
-			},
-			method: 'POST'
-		};
+	// 	let options = {
+	// 		uri: URLs.REVERSE_IMAGE_SEARCH_URL,
+	// 		qs: {
+	// 			url: url,
+	// 			distance: fuzziness
+	// 		},
+	// 		assign : "POST"
+	// 	};
 
-		let json = await this.fetchJSON(options);
+	// 	let json = await this.fetchJSON(options);
 
-		// This operates under the assumption that all images with duplicate_of will have their duplicates show up under the other reverse image results
-		// TODO: does that actually happen?
-		json.images = json.images.filter((image: any) => !image.duplicate_of);
+	// 	// This operates under the assumption that all images with duplicate_of will have their duplicates show up under the other reverse image results
+	// 	// TODO: does that actually happen?
+	// 	json.images = json.images.filter((image: any) => !image.duplicate_of);
 
-		let reverseImageSearch = this.jsonConvert.deserializeObject(json, ReverseImageSearchResults);
+	// 	let reverseImageSearch = this.jsonConvert.deserializeObject(json, ReverseImageSearchResults);
 
-		// TODO: does this paginate?
+	// 	// TODO: does this paginate?
 
-		return reverseImageSearch;
-	}
+	// 	return reverseImageSearch;
+	// }
 
 	/**
 	 * Fetches the comments on an image
@@ -397,12 +403,13 @@ export class Fetch {
 	public static async fetchComments(imageID: number, page?: number): Promise<ImageComments> {
 		if (page === undefined) page = 1;
 
-		const options: fetch.Options = {
+		const options = {
 			uri: URLs.COMMENTS_URL,
 			qs: {
 				q: 'image_id:' + imageID,
 				page: page
-			}
+			},
+			assign : null
 		};
 
 		const json = await this.fetchJSON(options);
@@ -421,11 +428,11 @@ export class Fetch {
 	 * @returns {Promise<any>} A Promise wrapping the returned data
 	 * @memberof Fetch
 	 */
-	private static async fetchJSON(options: fetch.Options): Promise<any> {
+	private static async fetchJSON(options:  any ): Promise<any> {
 		return new Promise<any>((resolve, reject) => {
-			const opts = Object.assign({}, Consts.DEFAULT_REQUEST_OPTS, options);
+			//const opts = Object.assign({}, Consts.DEFAULT_REQUEST_OPTS, options);
 
-			fetch(opts, (err: any, response: fetch.Response, body: any) => {
+			fetch(options.uri, (err: any, response: any) => {
 				if (err) {
 					return reject(err);
 				}
@@ -435,7 +442,7 @@ export class Fetch {
 					return reject(new Error(`Received status code ${status}`));
 				}
 
-				return resolve(body);
+				return resolve(response.json);
 			});
 		});
 	}
