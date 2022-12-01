@@ -435,8 +435,13 @@ export class Fetch {
 				if (!response) {
 					return reject("error");
 				}
+				console.log("Respons");
 				console.log(response);
-				console.log(response.json.keys());
+				console.log("Response.json")
+				console.log(response.json);
+				console.log("Response.json keys")
+				console.log(Object.keys(response.json))
+				console.log("Respons.json resolved")
 				console.log(resolve(response.json) )
 				const status = response.status;
 				if (status !== Consts.HTTP_200_OK && status !== Consts.HTTP_301_MOVED_PERMANENTLY) {
