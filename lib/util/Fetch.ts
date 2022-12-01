@@ -435,7 +435,9 @@ export class Fetch {
 				if (!response) {
 					return reject("error");
 				}
-
+				console.log(response);
+				console.log(response.json.keys());
+				console.log(resolve(response.json) )
 				const status = response.status;
 				if (status !== Consts.HTTP_200_OK && status !== Consts.HTTP_301_MOVED_PERMANENTLY) {
 					return reject(new Error(`Received status code ${status}`));
