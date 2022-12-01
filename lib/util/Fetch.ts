@@ -13,7 +13,6 @@ import { Stream } from 'stream';
 import { JsonConvert, ValueCheckingMode } from 'json2typescript';
 //import { Options } from 'request';
 import fetch from 'node-fetch';
-
 /**
  * Represents various sort formats for results
  *
@@ -431,13 +430,12 @@ export class Fetch {
 	private static async fetchJSON(options:  any ): Promise<any> {
 		return new Promise<any>((resolve, reject) => {
 			//const opts = Object.assign({}, Consts.DEFAULT_REQUEST_OPTS, options);
-
-			fetch(options.uri, (err: any, response: any) => {
-				if (err) {
-					return reject(err);
+			fetch(options.uri).then(response => {
+				if (!response) {
+					return reject("error");
 				}
 
-				const status = response.statusCode;
+				const status = response.status;
 				if (status !== Consts.HTTP_200_OK && status !== Consts.HTTP_301_MOVED_PERMANENTLY) {
 					return reject(new Error(`Received status code ${status}`));
 				}
