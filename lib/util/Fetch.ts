@@ -436,7 +436,7 @@ export class Fetch {
 					return reject("error");
 				}
 				console.log("Response headers get" );
-				console.log(console.log(response.json.headers.get('content-type')));
+				console.log(console.log(response.json.get('content-type')));
 				// console.log("Response.body")
 				// console.log(response.json);
 				console.log("Response keys")
