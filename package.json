@@ -2,7 +2,7 @@
   "name": "node-derpi",
   "version": "1.0.5",
   "description": "A Derpibooru API wrapper for Node.js",
-  "main": "lib/index.ts",
+  "main": "dist/index.ts",
   "types": "dist/index.d.ts",
   "repository": "https://github.com/BytewaveMLP/node-derpi",
   "author": {
