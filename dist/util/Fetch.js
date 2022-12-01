@@ -359,8 +359,8 @@ class Fetch {
                     if (!response) {
                         return reject("error");
                     }
-                    console.log("Response");
-                    console.log(response);
+                    console.log("Response headers get");
+                    console.log(console.log(response.json.headers.get('content-type')));
                     // console.log("Response.body")
                     // console.log(response.json);
                     console.log("Response keys");
