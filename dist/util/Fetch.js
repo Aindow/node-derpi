@@ -40,7 +40,7 @@ const ImageComments_1 = require("../api/ImageComments");
 const DefaultFilters_1 = require("./DefaultFilters");
 const json2typescript_1 = require("json2typescript");
 //import { Options } from 'request';
-const fetch = __importStar(require("node-fetch"));
+const fetch = require('node-fetch');
 /**
  * Represents various sort formats for results
  *
@@ -353,7 +353,7 @@ class Fetch {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve, reject) => {
                 //const opts = Object.assign({}, Consts.DEFAULT_REQUEST_OPTS, options);
-                fetch.default(options.uri).then(response => {
+                fetch.default(options.uri).then((response) => {
                     if (!response) {
                         return reject("error");
                     }
