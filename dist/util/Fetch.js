@@ -355,7 +355,7 @@ class Fetch {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve, reject) => {
                 //const opts = Object.assign({}, Consts.DEFAULT_REQUEST_OPTS, options);
-                //console.log(options);
+                console.log(options.qs);
                 fetch.default(options.uri, options.qs).then((response) => {
                     if (!response) {
                         return reject("error");
