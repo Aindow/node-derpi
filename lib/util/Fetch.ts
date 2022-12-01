@@ -432,7 +432,9 @@ export class Fetch {
 		return new Promise<any>((resolve, reject) => {
 			//const opts = Object.assign({}, Consts.DEFAULT_REQUEST_OPTS, options);
 			console.log(options.qs);
-			fetch.default(options.uri, options.qs).then((response: any) => {
+			var url = options.uri + "?q=" + options.qs.q + "?sf=" + options.qs.sf + "?sd=" + options.qs.sd + "?page=" + options.qs.page + "?filter_id=" + options.qs.filter_id ;
+			console.log(url);
+			fetch.default(url).then((response: any) => {
 				if (!response) {
 					return reject("error");
 				}
