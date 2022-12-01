@@ -430,8 +430,9 @@ export class Fetch {
 	private static async fetchJSON(options:  any ): Promise<any> {
 		return new Promise<any>((resolve, reject) => {
 			//const opts = Object.assign({}, Consts.DEFAULT_REQUEST_OPTS, options);
-			
+			console.log(options);
 			fetch.default(options.uri,{method:"Get"}).then((response: { status: any; json: any; }) => {
+				console.log(response);
 				if (!response) {
 					return reject("error");
 				}
