@@ -354,7 +354,7 @@ class Fetch {
             return new Promise((resolve, reject) => {
                 //const opts = Object.assign({}, Consts.DEFAULT_REQUEST_OPTS, options);
                 console.log(options.qs);
-                var url = options.uri + "?q=" + options.qs.q + "?sf=" + options.qs.sf + "?sd=" + options.qs.sd + "?page=" + options.qs.page + "?filter_id=" + options.qs.filter_id;
+                var url = options.uri + "?q=" + options.qs.q + "&sf=" + options.qs.sf + "&sd=" + options.qs.sd + "&page=" + options.qs.page + "&filter_id=" + options.qs.filter_id;
                 console.log(url);
                 fetch.default(url).then((response) => {
                     if (!response) {
