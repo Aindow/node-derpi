@@ -362,7 +362,7 @@ class Fetch {
                     console.log("Response");
                     console.log(response);
                     console.log("Response headers get");
-                    console.log(response.json.headers.get('content-type'));
+                    console.log(response.json.response.headers.get('content-type'));
                     // console.log("Response.body")
                     // console.log(response.json);
                     console.log("Response keys");
