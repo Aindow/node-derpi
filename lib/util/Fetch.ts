@@ -269,7 +269,6 @@ export class Fetch {
 		};
 
 		const json = await this.fetchJSON(options);
-		console.log(json);
 		let tag = this.jsonConvert.deserializeObject(json.tag, Tag);
 		tag.filterID = filterID;
 		tag.nextPage = page + 1;
@@ -432,7 +431,7 @@ export class Fetch {
 		return new Promise<any>((resolve, reject) => {
 			//const opts = Object.assign({}, Consts.DEFAULT_REQUEST_OPTS, options);
 			
-			fetch.default(options.uri).then((response: { status: any; json: any; }) => {
+			fetch.default(options.uri,{method:"Get"}).then((response: { status: any; json: any; }) => {
 				if (!response) {
 					return reject("error");
 				}
@@ -441,9 +440,7 @@ export class Fetch {
 				if (status !== Consts.HTTP_200_OK && status !== Consts.HTTP_301_MOVED_PERMANENTLY) {
 					return reject(new Error(`Received status code ${status}`));
 				}
-				console.log(response);
-				console.log(options);
-				return resolve(response.json);
+				return resolve(response.json());
 			});
 		});
 	}
