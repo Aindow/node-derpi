@@ -340,8 +340,6 @@ export class Fetch {
 		};
 
 		const json = await this.fetchJSON(options);
-		console.log("Search response")
-		console.log(json);
 		let searchResults = this.jsonConvert.deserializeObject(json, SearchResults);
 		searchResults.nextPage = page + 1;
 		searchResults.query = query;
@@ -436,7 +434,6 @@ export class Fetch {
 			var url = options.uri + "?q=" + options.qs.q + "?sf=" + options.qs.sf + "?sd=" + options.qs.sd + "?page=" + options.qs.page + "?filter_id=" + options.qs.filter_id ;
 			console.log(url);
 			fetch.default(url).then((response: any) => {
-				console.log(response);
 				if (!response) {
 					return reject("error");
 				}

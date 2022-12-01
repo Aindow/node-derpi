@@ -272,8 +272,6 @@ class Fetch {
                 assign: null
             };
             const json = yield this.fetchJSON(options);
-            console.log("Search response");
-            console.log(json);
             let searchResults = this.jsonConvert.deserializeObject(json, SearchResults_1.SearchResults);
             searchResults.nextPage = page + 1;
             searchResults.query = query;
@@ -359,7 +357,6 @@ class Fetch {
                 var url = options.uri + "?q=" + options.qs.q + "?sf=" + options.qs.sf + "?sd=" + options.qs.sd + "?page=" + options.qs.page + "?filter_id=" + options.qs.filter_id;
                 console.log(url);
                 fetch.default(url).then((response) => {
-                    console.log(response);
                     if (!response) {
                         return reject("error");
                     }
