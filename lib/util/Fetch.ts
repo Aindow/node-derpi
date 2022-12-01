@@ -432,7 +432,7 @@ export class Fetch {
 			//const opts = Object.assign({}, Consts.DEFAULT_REQUEST_OPTS, options);
 			//console.log(options);
 			fetch.default(options.uri,options.qs).then((response: { status: any; json: any; }) => {
-				console.log(response.json);
+				console.log(response.json());
 				if (!response) {
 					return reject("error");
 				}
