@@ -272,6 +272,7 @@ class Fetch {
                 assign: null
             };
             const json = yield this.fetchJSON(options);
+            console.log(json);
             let searchResults = this.jsonConvert.deserializeObject(json, SearchResults_1.SearchResults);
             searchResults.nextPage = page + 1;
             searchResults.query = query;
@@ -355,7 +356,6 @@ class Fetch {
                 //const opts = Object.assign({}, Consts.DEFAULT_REQUEST_OPTS, options);
                 //console.log(options);
                 fetch.default(options.uri, options.qs).then((response) => {
-                    console.log(response.json());
                     if (!response) {
                         return reject("error");
                     }
@@ -363,7 +363,7 @@ class Fetch {
                     if (status !== Consts.HTTP_200_OK && status !== Consts.HTTP_301_MOVED_PERMANENTLY) {
                         return reject(new Error(`Received status code ${status}`));
                     }
-                    return resolve(response.json());
+                    return resolve(response.json);
                 });
             });
         });
