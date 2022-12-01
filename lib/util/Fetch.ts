@@ -413,6 +413,7 @@ export class Fetch {
 		};
 
 		const json = await this.fetchJSON(options);
+		
 		let comments = this.jsonConvert.deserializeObject(json, ImageComments);
 		comments.nextPage = page + 1;
 		comments.imageID = imageID;
@@ -434,7 +435,7 @@ export class Fetch {
 			console.log(options.qs);
 			var url = options.uri + "?q=" + options.qs.q + "?sf=" + options.qs.sf + "?sd=" + options.qs.sd + "?page=" + options.qs.page + "?filter_id=" + options.qs.filter_id ;
 			console.log(url);
-			fetch.default(url).json().then((response: any) => {
+			fetch.default(url).then((response: any) => {
 				console.log(response);
 				if (!response) {
 					return reject("error");
@@ -444,7 +445,7 @@ export class Fetch {
 				if (status !== Consts.HTTP_200_OK && status !== Consts.HTTP_301_MOVED_PERMANENTLY) {
 					return reject(new Error(`Received status code ${status}`));
 				}
-				return resolve(response.json());
+				return resolve(response);
 			});
 		});
 	}
