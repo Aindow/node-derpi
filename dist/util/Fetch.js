@@ -360,7 +360,7 @@ class Fetch {
                         return reject("error");
                     }
                     console.log("Response");
-                    console.log(response);
+                    console.log(JSON.stringify(response));
                     console.log("Response headers get");
                     console.log(response.json.response.headers.get('content-type'));
                     // console.log("Response.body")
