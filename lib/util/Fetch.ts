@@ -431,12 +431,15 @@ export class Fetch {
 		return new Promise<any>((resolve, reject) => {
 			//const opts = Object.assign({}, Consts.DEFAULT_REQUEST_OPTS, options);
 			//console.log(options);
-			fetch.default(options.uri,options.qs).then((response: { status: any; json: any; }) => {
+			fetch.default(options.uri,options.qs).then((response: any) => {
 				if (!response) {
 					return reject("error");
 				}
+				console.log("Response")
+				console.log(response);
 				console.log("Response headers get" );
-				console.log(console.log(response.json.get('content-type')));
+				
+				console.log(response.json.headers.get('content-type'));
 				// console.log("Response.body")
 				// console.log(response.json);
 				console.log("Response keys")
