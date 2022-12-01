@@ -272,6 +272,7 @@ class Fetch {
                 assign: null
             };
             const json = yield this.fetchJSON(options);
+            console.log("Search response");
             console.log(json);
             let searchResults = this.jsonConvert.deserializeObject(json, SearchResults_1.SearchResults);
             searchResults.nextPage = page + 1;
@@ -363,8 +364,7 @@ class Fetch {
                         console.log("Response");
                         console.log(JSON.stringify(j));
                         console.log("Response headers get");
-                        //console.log(j.response.headers.get('content-type'));
-                        // console.log("Response.body")
+                        console.log(j.images);
                         // console.log(response.json);
                         console.log("Response keys");
                         console.log(Object.keys(j));

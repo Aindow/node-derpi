@@ -340,6 +340,7 @@ export class Fetch {
 		};
 
 		const json = await this.fetchJSON(options);
+		console.log("Search response")
 		console.log(json);
 		let searchResults = this.jsonConvert.deserializeObject(json, SearchResults);
 		searchResults.nextPage = page + 1;
@@ -439,9 +440,7 @@ export class Fetch {
 					console.log("Response")
 					console.log(JSON.stringify(j));
 					console.log("Response headers get" );
-					
-					//console.log(j.response.headers.get('content-type'));
-					// console.log("Response.body")
+					console.log(j.images)
 					// console.log(response.json);
 					console.log("Response keys")
 					console.log(Object.keys(j))
