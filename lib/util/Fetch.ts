@@ -11,7 +11,7 @@ import { ReverseImageSearchResults } from '../api/ReverseImageSearchResults';
 
 import { Stream } from 'stream';
 import { JsonConvert, ValueCheckingMode } from 'json2typescript';
-import request = require('request');
+import fetch = require('fetch');
 
 /**
  * Represents various sort formats for results
@@ -170,7 +170,7 @@ export class Fetch {
 	 * @memberof Fetch
 	 */
 	public static async fetchImage(id: string | number): Promise<Image> {
-		const options: request.Options = {
+		const options: fetch.Options = {
 			uri: URLs.IMAGE_URL.replace('{}', (id as string))
 		};
 
@@ -190,7 +190,7 @@ export class Fetch {
 	 * @memberof Fetch
 	 */
 	public static async fetchUser(username: string): Promise<User> {
-		const options: request.Options = {
+		const options: fetch.Options = {
 			uri: URLs.USER_URL.replace('{}', Helpers.slugify(username))
 		};
 
@@ -216,7 +216,7 @@ export class Fetch {
 			curId = (this.userIDToURLMap.get(id) as string);
 		}
 
-		const options: request.Options = {
+		const options: fetch.Options = {
 			uri: URLs.USER_URL.replace('{}', curId)
 		};
 		let requestOptions = Object.assign({}, options);
@@ -257,7 +257,7 @@ export class Fetch {
 		if (page === undefined) page = 1;
 		if (filterID === undefined) filterID = DefaultFilters.DEFAULT;
 
-		const options: request.Options = {
+		const options: fetch.Options = {
 			uri: URLs.TAG_URL.replace('{}', Helpers.slugify(name)),
 			qs: {
 				page: page,
@@ -286,7 +286,7 @@ export class Fetch {
 		if (page === undefined) page = 1;
 		if (filterID === undefined) filterID = DefaultFilters.DEFAULT;
 
-		const options: request.Options = {
+		const options: fetch.Options = {
 			uri: URLs.TAG_SEARCH_URL,
 			qs: {
 				q: 'id:' + id,
@@ -323,7 +323,7 @@ export class Fetch {
 		if (page === undefined) page = 1;
 		if (filterID === undefined) filterID = DefaultFilters.DEFAULT;
 
-		const options: request.Options = {
+		const options: fetch.Options = {
 			uri: URLs.SEARCH_URL,
 			qs: {
 				q: query,
@@ -363,7 +363,7 @@ export class Fetch {
 		else if (fuzziness > 0.5) fuzziness = 0.5;  // clamp high
 		else if (fuzziness < 0.2) fuzziness = 0.2;  // clamp low
 
-		let options: request.Options = {
+		let options: fetch.Options = {
 			uri: URLs.REVERSE_IMAGE_SEARCH_URL,
 			qs: {
 				url: url,
@@ -397,7 +397,7 @@ export class Fetch {
 	public static async fetchComments(imageID: number, page?: number): Promise<ImageComments> {
 		if (page === undefined) page = 1;
 
-		const options: request.Options = {
+		const options: fetch.Options = {
 			uri: URLs.COMMENTS_URL,
 			qs: {
 				q: 'image_id:' + imageID,
@@ -421,11 +421,11 @@ export class Fetch {
 	 * @returns {Promise<any>} A Promise wrapping the returned data
 	 * @memberof Fetch
 	 */
-	private static async fetchJSON(options: request.Options): Promise<any> {
+	private static async fetchJSON(options: fetch.Options): Promise<any> {
 		return new Promise<any>((resolve, reject) => {
 			const opts = Object.assign({}, Consts.DEFAULT_REQUEST_OPTS, options);
 
-			request(opts, (err: any, response: request.Response, body: any) => {
+			fetch(opts, (err: any, response: fetch.Response, body: any) => {
 				if (err) {
 					return reject(err);
 				}
