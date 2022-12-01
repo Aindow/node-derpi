@@ -445,7 +445,7 @@ export class Fetch {
 				if (status !== Consts.HTTP_200_OK && status !== Consts.HTTP_301_MOVED_PERMANENTLY) {
 					return reject(new Error(`Received status code ${status}`));
 				}
-				return resolve(response);
+				return resolve(response.json());
 			});
 		});
 	}
