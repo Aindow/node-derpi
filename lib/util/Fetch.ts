@@ -12,7 +12,7 @@ import { DefaultFilters } from './DefaultFilters';
 import { Stream } from 'stream';
 import { JsonConvert, ValueCheckingMode } from 'json2typescript';
 //import { Options } from 'request';
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
 /**
  * Represents various sort formats for results
