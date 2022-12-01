@@ -5,7 +5,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "repository": "https://github.com/BytewaveMLP/node-derpi",
-  "type":"module",
+  "type":"commonjs",
   "author": {
     "name": "Eliot Partridge",
     "email": "byte@code.horse",
