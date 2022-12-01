@@ -359,14 +359,14 @@ class Fetch {
                     if (!response) {
                         return reject("error");
                     }
-                    console.log("Respons");
+                    console.log("Response");
                     console.log(response);
-                    console.log("Response.json");
-                    console.log(response.json);
-                    console.log("Response.json keys");
-                    console.log(Object.keys(response.json));
-                    console.log("Respons.json resolved");
-                    console.log(resolve(response.json));
+                    // console.log("Response.body")
+                    // console.log(response.json);
+                    console.log("Response keys");
+                    console.log(Object.keys(response));
+                    console.log("Respons resolved");
+                    console.log(resolve(response));
                     const status = response.status;
                     if (status !== Consts.HTTP_200_OK && status !== Consts.HTTP_301_MOVED_PERMANENTLY) {
                         return reject(new Error(`Received status code ${status}`));
