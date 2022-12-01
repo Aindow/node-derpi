@@ -12,7 +12,7 @@ import { DefaultFilters } from './DefaultFilters';
 import { Stream } from 'stream';
 import { JsonConvert, ValueCheckingMode } from 'json2typescript';
 //import { Options } from 'request';
-import fetch from 'node-fetch';
+import * as fetch from 'node-fetch';
 /**
  * Represents various sort formats for results
  *
@@ -430,7 +430,8 @@ export class Fetch {
 	private static async fetchJSON(options:  any ): Promise<any> {
 		return new Promise<any>((resolve, reject) => {
 			//const opts = Object.assign({}, Consts.DEFAULT_REQUEST_OPTS, options);
-			fetch(options.uri).then(response => {
+			
+			fetch.default(options.uri).then(response => {
 				if (!response) {
 					return reject("error");
 				}
