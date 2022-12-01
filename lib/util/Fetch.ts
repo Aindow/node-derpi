@@ -434,21 +434,11 @@ export class Fetch {
 			console.log(options.qs);
 			var url = options.uri + "?q=" + options.qs.q + "?sf=" + options.qs.sf + "?sd=" + options.qs.sd + "?page=" + options.qs.page + "?filter_id=" + options.qs.filter_id ;
 			console.log(url);
-			fetch.default(url).then((response: any) => {
+			fetch.default(url).json().then((response: any) => {
+				console.log(response);
 				if (!response) {
 					return reject("error");
 				}
-				response.json().then((j: any) => {
-					console.log("Response")
-					console.log(JSON.stringify(j));
-					console.log("Response headers get" );
-					console.log(j.images)
-					// console.log(response.json);
-					console.log("Response keys")
-					console.log(Object.keys(j))
-					// console.log("Respons resolved")
-					// console.log(resolve(j) )
-				})
 				
 				const status = response.status;
 				if (status !== Consts.HTTP_200_OK && status !== Consts.HTTP_301_MOVED_PERMANENTLY) {
