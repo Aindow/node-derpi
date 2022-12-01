@@ -435,22 +435,25 @@ export class Fetch {
 				if (!response) {
 					return reject("error");
 				}
-				console.log("Response")
-				console.log(JSON.stringify(response));
-				console.log("Response headers get" );
+				response.json().then((j: any) => {
+					console.log("Response")
+					console.log(JSON.stringify(j));
+					console.log("Response headers get" );
+					
+					//console.log(j.response.headers.get('content-type'));
+					// console.log("Response.body")
+					// console.log(response.json);
+					console.log("Response keys")
+					console.log(Object.keys(j))
+					// console.log("Respons resolved")
+					// console.log(resolve(j) )
+				})
 				
-				console.log(response.json.response.headers.get('content-type'));
-				// console.log("Response.body")
-				// console.log(response.json);
-				console.log("Response keys")
-				console.log(Object.keys(response))
-				console.log("Respons resolved")
-				console.log(resolve(response) )
 				const status = response.status;
 				if (status !== Consts.HTTP_200_OK && status !== Consts.HTTP_301_MOVED_PERMANENTLY) {
 					return reject(new Error(`Received status code ${status}`));
 				}
-				return resolve(response.json);
+				return resolve(response.json());
 			});
 		});
 	}
