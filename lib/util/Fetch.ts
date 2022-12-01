@@ -432,7 +432,7 @@ export class Fetch {
 		return new Promise<any>((resolve, reject) => {
 			//const opts = Object.assign({}, Consts.DEFAULT_REQUEST_OPTS, options);
 			console.log(options.qs);
-			fetch.default(options.uri,options.qs).then((response: any) => {
+			fetch.default(options, {method : "Get"}).then((response: any) => {
 				if (!response) {
 					return reject("error");
 				}
